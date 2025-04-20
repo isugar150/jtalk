@@ -10,12 +10,15 @@ import {
 
 const CustomInput = (props) => {
   const {
+    isForm = true,
     validationRules = [],
     onValidationChange,
     width = 200,
     label,
     value,
     setValue,
+    minLength,
+    maxLength,
     ...restProps
   } = props;
 
@@ -23,7 +26,12 @@ const CustomInput = (props) => {
   const [errorMsg, setErrorMsg] = useState("");
 
   const onChange = (e) => {
-    setValue(e.target.value);
+    const htmlMaxLength = e.target.maxLength;
+    if (htmlMaxLength > 0 && e.target.value.length > htmlMaxLength) {
+      setValue(e.target.value.slice(0, htmlMaxLength));
+    } else {
+      setValue(e.target.value);
+    }
   };
 
   useEffect(() => {
@@ -34,30 +42,39 @@ const CustomInput = (props) => {
       let ruleIsValid = true;
       let ruleErrorMsg = "";
 
+      const valueExists =
+        value !== null && value !== undefined && String(value).trim() !== "";
+
       switch (rule) {
         case ValidationType.REQUIRED:
-          if (!value || value.trim() === "") {
+          if (!valueExists) {
             ruleIsValid = false;
             ruleErrorMsg = validationMessages[ValidationType.REQUIRED];
           }
           break;
         case ValidationType.ALPHANUMERIC:
-          if (value && !isValidAlphanumeric(value)) {
+          if (valueExists && !isValidAlphanumeric(value)) {
             ruleIsValid = false;
             ruleErrorMsg = validationMessages[ValidationType.ALPHANUMERIC];
           }
           break;
         case ValidationType.MIN_LENGTH:
-          const minLength = 5; // 예시: 최소 길이를 props로 받거나 여기서 정의
-          if (value && !checkMinLength(value, minLength)) {
+          if (
+            minLength !== undefined &&
+            valueExists &&
+            !checkMinLength(value, minLength)
+          ) {
             ruleIsValid = false;
             ruleErrorMsg =
               validationMessages[ValidationType.MIN_LENGTH](minLength);
           }
           break;
         case ValidationType.MAX_LENGTH:
-          const maxLength = 20; // 예시: 최대 길이를 props로 받거나 여기서 정의
-          if (value && !checkMaxLength(value, maxLength)) {
+          if (
+            maxLength !== undefined &&
+            valueExists &&
+            !checkMaxLength(value, maxLength)
+          ) {
             ruleIsValid = false;
             ruleErrorMsg =
               validationMessages[ValidationType.MAX_LENGTH](maxLength);
@@ -81,24 +98,36 @@ const CustomInput = (props) => {
     if (onValidationChange) {
       onValidationChange(currentIsValid);
     }
-  }, [value, validationRules, onValidationChange]);
+  }, [value, validationRules, onValidationChange, minLength, maxLength]);
 
   const isRequired = validationRules.includes(ValidationType.REQUIRED);
 
-  return (
-    <Field.Root invalid={!isValid} required={isRequired} style={{ width }}>
-      <Field.Label>
-        {label} {isRequired && <Field.RequiredIndicator />}
-      </Field.Label>
+  if (isForm)
+    return (
+      <Field.Root invalid={!isValid} required={isRequired} style={{ width }}>
+        <Field.Label>
+          {label} {isRequired && <Field.RequiredIndicator />}
+        </Field.Label>
+        <Input
+          {...restProps}
+          value={value}
+          onChange={onChange}
+          aria-invalid={!isValid}
+          maxLength={maxLength}
+        />
+        <Field.ErrorText>{errorMsg}</Field.ErrorText>
+      </Field.Root>
+    );
+  else
+    return (
       <Input
         {...restProps}
         value={value}
         onChange={onChange}
         aria-invalid={!isValid}
+        maxLength={maxLength}
       />
-      <Field.ErrorText>{errorMsg}</Field.ErrorText>
-    </Field.Root>
-  );
+    );
 };
 
 export default CustomInput;

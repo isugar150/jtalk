@@ -29,7 +29,7 @@ export function isValidPhoneNumber(phoneNumber) {
  * @param {string} name - 검사할 이름 문자열
  * @returns {boolean} 형식이 맞으면 true, 아니면 false
  */
-export function isValidKoreanName(name) {
+export function isValidKorean(name) {
   const regex = /^[가-힣]$/;
   return regex.test(name);
 }
@@ -40,7 +40,7 @@ export function isValidKoreanName(name) {
  * @returns {boolean} 형식이 맞으면 true, 아니면 false
  */
 export function isValidAlphanumeric(inputString) {
-  const regex = /^[a-zA-Z0-9]$/;
+  const regex = /^[a-zA-Z0-9]+$/;
   return regex.test(inputString);
 }
 
