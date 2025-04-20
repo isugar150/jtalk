@@ -31,7 +31,7 @@ spring:
 jtalk:
   frontUrl: "http://localhost:8080"
   # Database configuration (h2, oracle, mssql, postgresql, mysql, mariadb)
-  database: mysql
+  database: h2
 
   # Oracle database configuration
   datasource:
@@ -60,7 +60,7 @@ jtalk:
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://localhost:13306/jtalk?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       username: root
-      password: 890214hf
+      password: password
 
     # MariaDB configuration
     mariadb:
