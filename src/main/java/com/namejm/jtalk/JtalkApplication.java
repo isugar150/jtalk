@@ -1,0 +1,13 @@
+package com.namejm.jtalk;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class JtalkApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(JtalkApplication.class, args);
+	}
+
+}
