@@ -52,7 +52,8 @@ const Home = () => {
         onValidationChange={handleValidationChange}
         minLength={3}
         maxLength={20}
-        placeholder="영문/숫자 3~20자 입력"
+        placeholder="사용자 토큰을 입력해주세요."
+        helperText={"영문 또는 숫자 3~20글자 이내로 입력하세요."}
         width={300}
       />
 

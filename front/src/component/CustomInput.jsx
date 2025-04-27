@@ -19,6 +19,7 @@ const CustomInput = (props) => {
     setValue,
     minLength,
     maxLength,
+    helperText,
     ...restProps
   } = props;
 
@@ -115,6 +116,7 @@ const CustomInput = (props) => {
           aria-invalid={!isValid}
           maxLength={maxLength}
         />
+        <Field.HelperText>{helperText}</Field.HelperText>
         <Field.ErrorText>{errorMsg}</Field.ErrorText>
       </Field.Root>
     );

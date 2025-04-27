@@ -7,7 +7,7 @@ export const ValidationType = Object.freeze({
 
 export const validationMessages = {
   [ValidationType.REQUIRED]: "필수 입력 항목입니다.",
-  [ValidationType.ALPHANUMERIC]: "소문자/대문자/숫자 3~20자 이내여야 합니다.",
+  [ValidationType.ALPHANUMERIC]: "소문자/대문자/숫자만 입력 가능합니다.",
   [ValidationType.MIN_LENGTH]: (minLength) =>
     `${minLength}자 이상 입력해야 합니다.`,
   [ValidationType.MAX_LENGTH]: (maxLength) =>
